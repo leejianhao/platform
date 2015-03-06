@@ -1,0 +1,6 @@
+author:leejianhao start:2015-3-3
+2015-3-2,查看mybatis官方中文简介，抽象baseDao.
+2015-3-3,整合springMvc4,spring4,mybatis3。
+2015-3-4，整合ehcache,包括页面缓存,通过Junit测试。
+2015-3-5，整合logback，通過Junit測試。编写HttpUtil.
+2015-3-6.熟悉freemarker，编写demo代码。

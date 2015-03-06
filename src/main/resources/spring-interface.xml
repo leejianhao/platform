@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byName">
+        
+	<bean id="httpUtil" class="com.greencloud.website.util.HttpUtil">
+		<property name="host" value="http://122.224.65.101:/ipms" />
+		<property name="constantParameterMap">
+			<map>
+				<entry key="hotelGroupId" value="2" />
+			</map>
+		</property>
+	</bean>	
+	
+	<!-- http://122.224.65.101:48090/ipms -->
+	<bean id="httpUtilForCrs" class="com.greencloud.website.util.HttpUtil">
+		<property name="host" value="http://122.224.65.101:/ipms" />
+		<property name="constantParameterMap">
+			<map>
+				<entry key="hotelGroupId" value="2" />
+			</map>
+		</property>
+	</bean>
+	<bean id="interfaceMethod" class="com.greencloud.website.InterfaceMethod">
+		<!-- sync -->
+		<property name="country" value="web/webSyncCountry" />
+		<property name="province" value="web/webSyncProvince" />
+		<property name="city" value="web/webSyncCity" />
+		<property name="district" value="web/webSyncDistrict" />
+		<property name="town" value="web/webSyncTown" />
+		<property name="shoppingDistrict" value="web/webSyncShoppingDistrict" />
+		<property name="scenicSpot" value="web/webSyncScenicSpot" />
+		<property name="serviceConfig" value="web/webSyncHotelServiceConfig" />
+		<property name="htAroundTraffic" value="web/webSyncHotelAroundTraffic" />
+		<property name="htSpecialPrompt" value="web/webSyncHotelSpecialPrompt" />
+		<property name="htBrand" value="web/webSyncBrand" />
+		<property name="htHotel" value="web/webSyncHotel" />
+		<property name="promotion" value="web/webSyncHotelPromotion" />
+		<property name="hotelCategory" value="web/webSyncHotelCategory" />
+		<property name="sysOptions" value="web/webSyncSysOption" />
+		
+		<!-- rsv -->
+		<property name="room" value="CRS/queryHotelList" />
+		<property name="roomNew" value="CRS/queryHotelListn" />
+		<property name="rateQueryEveryDay" value="CRS/rateQueryEveryDay" />
+		<property name="postRsv" value="CRS/book" />
+		<property name="postRsvWithCoupon" value="CRS/bookWithCoupon" />
+		<property name="listCrs" value="CRS/findResrvList" />
+		<property name="getCrs" value="CRS/findResrvGuest" />
+		<property name="cancelCrs" value="CRS/cancelbook" />
+		<property name="saveWebPay" value="CRS/saveWebPay" />
+		<property name="getCrsWithoutCardNo" value="CRS/findResrvGuestWithoutCardNo" />
+		
+		<!-- coupon -->
+		<property name="listCouponByMember" value="CRS/findCouponDetailListByCardNo" />
+		<!-- <property name="selfCouponGet" value="CRS/selfCouponGetByMember" /> -->
+		<!-- valid coupon -->
+		<property name="validCouponByNo" value="CRS/getCouponByNo"/>
+
+		<!-- member -->
+		<property name="emailVerify" value="membercard/verifyEmail" />
+		<property name="verifyEmailApply" value="membercard/verifyEmailApply" />
+		
+		<property name="verifyMobile" value="membercard/verifyMobile" />
+		<property name="verifyMobileApply" value="membercard/verifyMobileApply" />
+		
+		<property name="memberLogin" value="membercard/memberLogin" />
+		<property name="resetPassword" value="membercard/resetPassword" />
+		<property name="reactiveCard" value="membercard/reactiveCard" />
+		<property name="registerApply" value="membercard/registerMemberCardApply" />
+		<property name="registerVerify" value="membercard/registerMemberCard" />
+		<property name="registerApplyWithOutVerify" value="membercard/registerMemberCardWithOutVerify" />
+		<property name="updateMember" value="membercard/updateMember" />
+		<property name="listExchangeItem" value="membercard/getExchangItemList" />
+		<property name="pointExchange" value="membercard/pointExchange" />
+		<property name="listPoint" value="membercard/getPointList" />
+		<property name="listAccount" value="membercard/getAccountList" />
+	</bean>
+	
+</beans>

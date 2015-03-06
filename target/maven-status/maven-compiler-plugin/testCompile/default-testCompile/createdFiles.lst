@@ -1,0 +1,3 @@
+com\greencluod\website\logback\TestLogback.class
+com\greencloud\website\freemarker\TestFreemarker.class
+com\greencloud\website\ehcache\EhcacheTest.class

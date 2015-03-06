@@ -1,0 +1,52 @@
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+  
+  <contextName>GreenCloud Website</contextName>
+  
+  <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>   
+  
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">  
+  	
+  	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+  	  <fileNamePattern>catalina.%d{yyyy-MM-dd}.out</fileNamePattern>   
+      <maxHistory>30</maxHistory>   
+  	</rollingPolicy>
+  	
+    <encoder>  
+      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>  
+    </encoder>  
+  </appender>
+  
+  <appender name="CONSOLE2" class="ch.qos.logback.core.ConsoleAppender">   
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">   
+      <level>INFO</level>   
+      <onMatch>ACCEPT</onMatch>   
+      <onMismatch>DENY</onMismatch>   
+    </filter>   
+    <encoder>   
+      <pattern>   
+        %-4relative [%thread] %-5level %logger{30} - %msg%n   
+      </pattern>   
+    </encoder>   
+  </appender>
+  
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <!-- logback为java中的包 -->   
+  <logger name="com.greencluod.website"/>  
+  
+  <!--logback.LogbackDemo：类的全路径
+  additivity=false:表示不再向上级com.greencluod.website传递 -->   
+  <logger name="com.greencluod.website.logback" level="INFO" additivity="false">  
+    <appender-ref ref="FILE"/>  
+  </logger> 
+  
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>

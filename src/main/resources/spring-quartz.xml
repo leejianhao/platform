@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+    	http://www.springframework.org/schema/context/spring-context.xsd"
+        default-autowire="byName">
+        
+    <bean id="sysJobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+       <property name="targetObject"> 
+           <ref bean="sysOptionControl"/> 
+       </property>
+       <property name="targetMethod"> 
+           <value>createSysOptionMap</value> 
+       </property>
+    </bean>
+    
+    <bean id="sysTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail">
+			<!-- see the example of method invoking job above -->
+			<ref bean="sysJobtask" />
+		</property>
+		<property name="startDelay">
+			<!-- 1 second delay -->
+			<value>1000</value>
+		</property>
+		<property name="repeatInterval">
+			<!-- repeat every hour -->
+			<value>3600000</value>
+		</property>
+	</bean>	
+	
+	<!-- 定时任务:未支付订单的截至时间失效后的订单自动取消 -->
+	<bean id="job4resrvWeb" class="com.greencloud.job.Job4resrvWeb" />
+	
+	<!-- jobDetail:未支付订单的截至时间失效后的订单自动取消 -->
+	<bean id="jobDetail4resrvWeb"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="job4resrvWeb" />
+		</property>
+		<property name="targetMethod">
+			<value>cancelExpiredOrder</value><!-- 执行的方法:取消订单 -->
+		</property>
+	</bean>
+	
+	<!-- 触发器：未支付订单的截至时间失效后的订单自动取消 -->
+	<bean id="cronTrigger4resrvWeb" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="jobDetail4resrvWeb" />
+		</property>
+		<property name="cronExpression">
+			<value>* 0/5 * * * ?</value>
+		</property>
+	</bean>
+	
+	
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="startQuertz" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="sysTrigger" />	
+				<!--ref local="cronTrigger4resrvWeb" /-->
+			</list>
+		</property>
+	</bean>
+</beans>
