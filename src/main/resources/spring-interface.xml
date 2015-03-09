@@ -7,20 +7,20 @@
         default-autowire="byName">
         
 	<bean id="httpUtil" class="com.greencloud.website.util.HttpUtil">
-		<property name="host" value="http://122.224.65.101:/ipms" />
+		<property name="host" value="http://183.129.215.114:8090/ipms" />
 		<property name="constantParameterMap">
 			<map>
-				<entry key="hotelGroupId" value="2" />
+				<entry key="hotelGroupId" value="1" />
 			</map>
 		</property>
 	</bean>	
 	
 	<!-- http://122.224.65.101:48090/ipms -->
 	<bean id="httpUtilForCrs" class="com.greencloud.website.util.HttpUtil">
-		<property name="host" value="http://122.224.65.101:/ipms" />
+		<property name="host" value="http://183.129.215.114:8090/ipms" />
 		<property name="constantParameterMap">
 			<map>
-				<entry key="hotelGroupId" value="2" />
+				<entry key="hotelGroupId" value="1" />
 			</map>
 		</property>
 	</bean>

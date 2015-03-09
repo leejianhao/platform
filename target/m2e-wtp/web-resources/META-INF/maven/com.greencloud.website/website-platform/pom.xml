@@ -114,6 +114,12 @@
 	</dependency>
 	
 	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>druid</artifactId>
+		<version>1.0.13</version>
+	</dependency>
+	
+	<dependency>
 		<groupId>commons-lang</groupId>
 		<artifactId>commons-lang</artifactId>
 		<version>2.6</version>
@@ -247,6 +253,18 @@
 	     <version>1.0.3</version>
 	</dependency>
 	
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>4.4</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.3.1</version>
+	</dependency>
+
   </dependencies>
   
   
@@ -301,7 +319,7 @@
 	    	<groupId>org.apache.maven.plugins</groupId>
 	   		<artifactId>maven-surefire-plugin</artifactId>
 	    	<configuration>
-	     	<testFailureIgnore>true</testFailureIgnore>
+	     		<testFailureIgnore>true</testFailureIgnore>
 	    	</configuration>
 	    </plugin>
     </plugins>  
@@ -331,11 +349,11 @@
         </resource>
     </resources>
     
-    <!-- <sourceDirectory>src/java</sourceDirectory>  
+   <!--  <sourceDirectory>src/java</sourceDirectory>  
     <testSourceDirectory>src/test</testSourceDirectory>  
     <outputDirectory>target/classes</outputDirectory>  
     <testOutputDirectory>target/test-classes</testOutputDirectory>  
-    <directory>target/jar</directory>   -->
+    <directory>target/jar</directory>  --> 
 	    
   </build>
 </project>

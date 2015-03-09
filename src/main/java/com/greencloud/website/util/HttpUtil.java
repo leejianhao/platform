@@ -9,13 +9,13 @@ import java.util.Map;
 
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -23,6 +23,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.mortbay.log.Log;
 
 /**
  * 
@@ -45,9 +46,9 @@ public class HttpUtil {
 	/*单条链路的最多并发数*/
 	private int maxPerRoute = 20;
 	/*链接超时*/
-	private int connectTimeout = 2000;
+	private int connectTimeout = 5000;
 	/*请求sockget链接超时*/
-	private int socketTimeout = 2000;
+	private int socketTimeout = 5000;
 	private Map<String, String> constantParameterMap;
 	private String host;
 	private String method;
@@ -135,42 +136,52 @@ public class HttpUtil {
 		}
 		
 		StringBuffer sb = new StringBuffer();
-		
 		HttpPost post = new HttpPost(this.getHost() + this.getMethod());
+		
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(socketTimeout)
 				.setConnectTimeout(connectTimeout)
 				.build();
 		post.setConfig(requestConfig);
+		
 		UrlEncodedFormEntity uf = new UrlEncodedFormEntity(ps, Consts.UTF_8);
+		
 		post.setEntity(uf);
-		HttpResponse response = httpclient.execute(post);
-		// The underlying HTTP connection is still held by the response object
-		// to allow the response content to be streamed directly from the network socket.
-		// In order to ensure correct deallocation of system resources
-		// the user MUST call CloseableHttpResponse#close() from a finally clause.
-		// Please note that if response content is not fully consumed the underlying
-		// connection cannot be safely re-used and will be shut down and discarded
-		// by the connection manager. 
+		Log.debug(post.getRequestLine().getUri()+"?"+URLEncodedUtils.format(ps, Consts.UTF_8));
 		try {
-			HttpEntity entity = response.getEntity();
-			if (entity != null) {
-				//read into a in-memory buffer. 
-				entity = new BufferedHttpEntity(entity);
-				InputStreamReader isr = new InputStreamReader(entity.getContent(), Consts.UTF_8);
-				BufferedReader br = new BufferedReader(isr);
-				String line = null;
-				while ((line = br.readLine()) != null) {
-					sb.append(line);
+			CloseableHttpResponse response = httpclient.execute(post);
+			try {
+				HttpEntity entity = response.getEntity();
+				
+				if (entity != null) {
+					//read into a in-memory buffer. 
+					entity = new BufferedHttpEntity(entity);
+					InputStreamReader isr = new InputStreamReader(entity.getContent(), Consts.UTF_8);
+					BufferedReader br = new BufferedReader(isr);
+					try {
+						String line = null;
+						while ((line = br.readLine()) != null) {
+							sb.append(line);
+						}
+					}catch(IOException ex) {
+						throw ex;
+					}finally {
+						br.close(); 
+						isr.close();
+					}
 				}
-				br.close(); 
-				isr.close();
+				// do something useful with the response body
+			    // and ensure it is fully consumed
+				EntityUtils.consume(entity);
+			} finally {
+				response.close();
 			}
-			// do something useful with the response body
-		    // and ensure it is fully consumed
-			EntityUtils.consume(entity);
-		} finally {
-			httpclient.close();
+			
+		}finally {
+			//When a request fails, only shutdown the connection manager if it's
+			//single use. If the connection manager is reusable, it should be left
+			//open so that it can be used by subsequent requests.
+			//httpclient.close();
 		}
 		return sb.toString();
 	}

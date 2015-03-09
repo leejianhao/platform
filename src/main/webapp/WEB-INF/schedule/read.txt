@@ -4,3 +4,4 @@ author:leejianhao start:2015-3-3
 2015-3-4，整合ehcache,包括页面缓存,通过Junit测试。
 2015-3-5，整合logback，通過Junit測試。编写HttpUtil.
 2015-3-6.熟悉freemarker，编写demo代码。
+2015-3-9.加入druid(数据源).

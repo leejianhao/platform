@@ -114,6 +114,12 @@
 	</dependency>
 	
 	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>druid</artifactId>
+		<version>1.0.13</version>
+	</dependency>
+	
+	<dependency>
 		<groupId>commons-lang</groupId>
 		<artifactId>commons-lang</artifactId>
 		<version>2.6</version>
@@ -250,10 +256,15 @@
 	<dependency>
 		<groupId>org.apache.httpcomponents</groupId>
 		<artifactId>httpclient</artifactId>
-		<version>4.3.5</version>
+		<version>4.4</version>
 	</dependency>
 	
-	
+	<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.3.1</version>
+	</dependency>
+
   </dependencies>
   
   
@@ -338,11 +349,11 @@
         </resource>
     </resources>
     
-    <sourceDirectory>src/java</sourceDirectory>  
+   <!--  <sourceDirectory>src/java</sourceDirectory>  
     <testSourceDirectory>src/test</testSourceDirectory>  
     <outputDirectory>target/classes</outputDirectory>  
     <testOutputDirectory>target/test-classes</testOutputDirectory>  
-    <directory>target/jar</directory>  
+    <directory>target/jar</directory>  --> 
 	    
   </build>
 </project>

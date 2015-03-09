@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fields>
+	<field id="sex" name="请选择性别">
+		<data>
+			<key>0</key>
+			<value>男</value>
+		</data>
+		<data>
+			<key>1</key>
+			<value>女</value>
+		</data>
+	</field>
+	
+	<field id="nation" name="请选择名族">
+		<data>
+			<key>01</key>
+			<value>汉族</value>
+		</data>
+		<data>
+			<key>02</key>
+			<value>回族</value>
+		</data>
+		<data>
+			<key>03</key>
+			<value>藏族</value>
+		</data>
+		<data>
+			<key>04</key>
+			<value>黎族</value>
+		</data>
+	</field>
+</fields>

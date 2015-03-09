@@ -17,6 +17,14 @@
 	<!-- 设定Spring 去哪些包中找Annotation -->
 	<context:component-scan base-package="com.greencloud.website" />
 	
+	<bean id="ftlPath" class="java.lang.String">
+		<constructor-arg value="/ftl"/>
+	</bean>
+	
+	<bean id="outPath" class="java.lang.String">
+		<constructor-arg value="/jsp/template"/>
+	</bean>
+	
 	<util:properties id="filePath" location="classpath:config.properties"/>  
 	
 	<import resource="spring-tx.xml" />	

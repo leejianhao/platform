@@ -22,14 +22,32 @@ public class TestHttpClient {
 	public void setUp() {
 		httpUtil = new HttpUtil();
 	}
+	
 	@Test
 	public void test01() throws ClientProtocolException, IOException {
 		List<NameValuePair> ps = post();
 		String result = httpUtil.post(ps);
 		System.out.println(result);
 	}
+	
+	private List<NameValuePair> post2() {
+		httpUtil.setHost("http://122.224.65.101:48090/ipms");
+		httpUtil.setMethod("CRS/queryHotelList");
+		List<NameValuePair> ps = new ArrayList<NameValuePair>();
+		ps.add(new BasicNameValuePair("salesChannel","WEB"));
+		ps.add(new BasicNameValuePair("date","2015-03-07"));
+		ps.add(new BasicNameValuePair("dayCount","1"));
+		ps.add(new BasicNameValuePair("cityCode",""));
+		ps.add(new BasicNameValuePair("hotelIds","9"));
+		
+		Map constantParameterMap = new HashMap();
+		constantParameterMap.put("hotelGroupId", "2");
+		httpUtil.setConstantParameterMap(constantParameterMap);
+		return ps;
+	}
+	
 	private List<NameValuePair> post() {
-		httpUtil.setHost("http://192.168.0.106:8080/ipms");
+		httpUtil.setHost("http://183.129.215.114:8090/ipms");
 		httpUtil.setMethod("rsvn_man/check_login");
 		List<NameValuePair> ps = new ArrayList<NameValuePair>();
 		ps.add(new BasicNameValuePair("companyId","11090"));
